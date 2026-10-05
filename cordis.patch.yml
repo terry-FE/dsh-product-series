@@ -1,0 +1,40 @@
+# dsh bundle patch layer for dsh-product-series.
+#
+# Composed after the profile's own bundles and before the profile's
+# cordis.patch.yml, so a deployment can override any `config` value below from
+# its own profile patch (matching on the `product-series` entry id).
+#
+# `name` is resolved by the loader from the profile's node_modules, which is
+# where `dsh plugin --profile <name> add dsh-product-series` installs it.
+- insert:
+    - id: product-series
+      name: dsh-product-series
+      config:
+        # Volcengine Ark endpoint and image model. Model availability is
+        # per-account: a name that exists in Ark's catalogue but is not activated
+        # for the account answers ModelNotOpen. See the README for how to list
+        # the models an account can actually call.
+        baseURL: https://ark.cn-beijing.volces.com/api/v3
+        model: doubao-seedream-5-0-pro-260628
+        # Ark size tier for the generated frame. The plugin always rescales the
+        # result to exactly 400x400, so this only controls how much detail the
+        # provider renders before the downscale.
+        size: 2K
+        # Ark's "AI generated" corner mark; off by default for product shots.
+        watermark: false
+        # Frames generated in parallel. Raise cautiously: providers rate-limit
+        # per account.
+        concurrency: 2
+        # Reference images attached per request. More references pin the look
+        # more tightly but enlarge the request body.
+        maxReferences: 4
+        # Directory for generated frames, relative to the session working
+        # directory unless an absolute path is passed to the tool.
+        outputFolder: product-series
+        # libwebp quality for the delivered 400x400 frames.
+        webpQuality: 90
+        # ffmpeg is required: it decodes each provider frame, rescales it to
+        # exactly 400x400, and encodes the WebP. Left unset it is discovered from
+        # DSH_FFMPEG_PATH and then PATH; set this only when the binary is
+        # installed somewhere PATH does not reach.
+        # ffmpegPath: C:\path\to\ffmpeg.exe

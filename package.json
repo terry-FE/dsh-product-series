@@ -1,0 +1,64 @@
+{
+  "name": "dsh-product-series",
+  "version": "0.1.0",
+  "description": "DSH bundle: generate a consistent 400x400 product image series from workspace Figma reference artwork and a prompt.",
+  "type": "module",
+  "license": "MIT",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "plugin.mjs",
+    "cordis.patch.yml",
+    "lib/ark.mjs",
+    "lib/image-ffmpeg.mjs",
+    "lib/series.mjs",
+    "lib/webp.mjs",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node test/image-ffmpeg.test.mjs && node test/series.test.mjs && node --import ./test/register-stubs.mjs test/plugin.test.mjs",
+    "test:image": "node test/image-ffmpeg.test.mjs",
+    "test:series": "node test/series.test.mjs",
+    "test:plugin": "node --import ./test/register-stubs.mjs test/plugin.test.mjs",
+    "fixtures": "node scripts/make-fixtures.mjs",
+    "e2e": "node --import ./test/register-stubs.mjs scripts/e2e.mjs",
+    "pack:check": "npm pack --dry-run"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "image-generation",
+    "product-photography",
+    "figma",
+    "seedream",
+    "ark",
+    "cordis"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.0 <5",
+    "@deepseek-ai/dsh-tools": ">=0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  }
+}

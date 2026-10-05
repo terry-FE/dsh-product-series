@@ -1,0 +1,11 @@
+# Packed bundle produced by `npm pack`.
+*.tgz
+
+# Local generation output from `npm run e2e` and the prompt probe.
+_e2e-output/
+_probe-output/
+
+# Throwaway DSH home used to verify the bundle installs and composes.
+_dsh-test-home/
+
+node_modules/
